@@ -1110,8 +1110,12 @@ function navigatePage(pageId) {
 /* ═══════════════════════════════════════
    PAGE 1: INPUT LOGIC
    ═══════════════════════════════════════ */
+
 function validateInput() {
-  var name = DOM.input.name.value.trim();
+  
+      
+const params = new URLSearchParams(window.location.search);
+const name = params.get("token");
 
   if (!name) {
     DOM.input.name.classList.add('error');
