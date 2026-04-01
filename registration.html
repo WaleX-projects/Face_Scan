@@ -1112,27 +1112,49 @@ function navigatePage(pageId) {
    ═══════════════════════════════════════ */
 
 function validateInput() {
-  const name = document.getElementById("employeeName").value.trim();
+  var name = DOM.input.name.value.trim();
 
   if (!name) {
-    document.getElementById("employeeName").classList.add("error");
-    document.getElementById("nameErrorText").textContent = "Employee ID is required";
-    document.getElementById("nameError").classList.add("visible");
+    DOM.input.name.classList.add('error');
+    DOM.input.errorText.textContent = 'Employee name is required';
+    DOM.input.error.classList.add('visible');
+    DOM.input.name.parentElement.classList.add('shake');
+    setTimeout(function() {
+      DOM.input.name.parentElement.classList.remove('shake');
+    }, 500);
     return false;
   }
 
   if (name.length < 2) {
-    document.getElementById("employeeName").classList.add("error");
-    document.getElementById("nameErrorText").textContent = "ID must be at least 2 characters";
-    document.getElementById("nameError").classList.add("visible");
+    DOM.input.name.classList.add('error');
+    DOM.input.errorText.textContent = 'Name must be at least 2 characters';
+    DOM.input.error.classList.add('visible');
     return false;
   }
 
-  document.getElementById("employeeName").classList.remove("error");
-  document.getElementById("nameError").classList.remove("visible");
-
+  DOM.input.name.classList.remove('error');
+  DOM.input.error.classList.remove('visible');
   return true;
 }
+
+function handleStartRegistration() {
+  if (!validateInput()) return;
+
+  AppState.employeeName = DOM.input.name.value.trim();
+  navigatePage('capture');
+}
+
+DOM.input.btnStart.addEventListener('click', handleStartRegistration);
+DOM.input.name.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') handleStartRegistration();
+  DOM.input.name.classList.remove('error');
+  DOM.input.error.classList.remove('visible');
+});
+
+DOM.input.name.addEventListener('input', function() {
+  DOM.input.name.classList.remove('error');
+  DOM.input.error.classList.remove('visible');
+});
 /* ═══════════════════════════════════════
    PAGE 2: CAMERA & FACE DETECTION
    ═══════════════════════════════════════ */
