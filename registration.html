@@ -1118,6 +1118,7 @@ const params = new URLSearchParams(window.location.search);
 const name = params.get("token");
 
   if (!name) {
+     DOM.input.name.value = name; //
     DOM.input.name.classList.add('error');
     DOM.input.errorText.textContent = 'Employee name is required';
     DOM.input.error.classList.add('visible');
