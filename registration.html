@@ -1112,39 +1112,27 @@ function navigatePage(pageId) {
    ═══════════════════════════════════════ */
 
 function validateInput() {
-  const params = new URLSearchParams(window.location.search);
-  const name = params.get("token");
-
-  // 👇 ALWAYS show token in input (move this outside the if)
-  if (name) {
-    DOM.input.name.value = name;
-  }
+  const name = document.getElementById("employeeName").value.trim();
 
   if (!name) {
-    DOM.input.name.classList.add('error');
-    DOM.input.errorText.textContent = 'Employee name is required';
-    DOM.input.error.classList.add('visible');
-    DOM.input.name.parentElement.classList.add('shake');
-
-    setTimeout(function() {
-      DOM.input.name.parentElement.classList.remove('shake');
-    }, 500);
-
+    document.getElementById("employeeName").classList.add("error");
+    document.getElementById("nameErrorText").textContent = "Employee ID is required";
+    document.getElementById("nameError").classList.add("visible");
     return false;
   }
 
   if (name.length < 2) {
-    DOM.input.name.classList.add('error');
-    DOM.input.errorText.textContent = 'Name must be at least 2 characters';
-    DOM.input.error.classList.add('visible');
+    document.getElementById("employeeName").classList.add("error");
+    document.getElementById("nameErrorText").textContent = "ID must be at least 2 characters";
+    document.getElementById("nameError").classList.add("visible");
     return false;
   }
 
-  DOM.input.name.classList.remove('error');
-  DOM.input.error.classList.remove('visible');
+  document.getElementById("employeeName").classList.remove("error");
+  document.getElementById("nameError").classList.remove("visible");
+
   return true;
 }
-
 /* ═══════════════════════════════════════
    PAGE 2: CAMERA & FACE DETECTION
    ═══════════════════════════════════════ */
@@ -1775,6 +1763,15 @@ DOM.capture.btnBack.addEventListener('click', function() {
    ═══════════════════════════════════════ */
 (function init() {
   DOM.input.name.focus();
+   const params = new URLSearchParams(window.location.search);
+const token = params.get("token");
+
+const input = document.getElementById("employeeName");
+
+// 👇 Show token in the input
+if (token) {
+  input.value = token;
+}
 })();
 </script>
 </body>
