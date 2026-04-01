@@ -1112,20 +1112,24 @@ function navigatePage(pageId) {
    ═══════════════════════════════════════ */
 
 function validateInput() {
-  
-      
-const params = new URLSearchParams(window.location.search);
-const name = params.get("token");
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get("token");
+
+  // 👇 ALWAYS show token in input (move this outside the if)
+  if (name) {
+    DOM.input.name.value = name;
+  }
 
   if (!name) {
-     DOM.input.name.value = name; //
     DOM.input.name.classList.add('error');
     DOM.input.errorText.textContent = 'Employee name is required';
     DOM.input.error.classList.add('visible');
     DOM.input.name.parentElement.classList.add('shake');
+
     setTimeout(function() {
       DOM.input.name.parentElement.classList.remove('shake');
     }, 500);
+
     return false;
   }
 
@@ -1140,25 +1144,6 @@ const name = params.get("token");
   DOM.input.error.classList.remove('visible');
   return true;
 }
-
-function handleStartRegistration() {
-  if (!validateInput()) return;
-
-  AppState.employeeName = DOM.input.name.value.trim();
-  navigatePage('capture');
-}
-
-DOM.input.btnStart.addEventListener('click', handleStartRegistration);
-DOM.input.name.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter') handleStartRegistration();
-  DOM.input.name.classList.remove('error');
-  DOM.input.error.classList.remove('visible');
-});
-
-DOM.input.name.addEventListener('input', function() {
-  DOM.input.name.classList.remove('error');
-  DOM.input.error.classList.remove('visible');
-});
 
 /* ═══════════════════════════════════════
    PAGE 2: CAMERA & FACE DETECTION
